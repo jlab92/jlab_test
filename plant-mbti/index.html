@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>식물 MBTI 테스트 · J LAB</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&display=swap');
+:root{--pink:#ff9fc1;--pink2:#fff0f6;--green:#69cf6d;--green2:#efffe9;--yellow:#ffe56e;--blue:#9bdcff;--ink:#222;--line:#252525;--cream:#fffbed}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f7f7f5;color:var(--ink);font-family:'Noto Sans KR','Malgun Gothic',sans-serif}button{font:inherit;color:inherit}.app{width:min(100%,430px);min-height:100vh;margin:auto;background:linear-gradient(180deg,#fff7fa 0%,#fff 45%,#f4ffe9 100%);position:relative;overflow:hidden;border-left:1px solid #eee;border-right:1px solid #eee}.screen{display:none;min-height:100vh;position:relative;padding:20px 20px 28px}.screen.active{display:block}.jua{font-family:'Jua','Malgun Gothic',sans-serif}.topbar{height:46px;display:flex;align-items:center;justify-content:space-between;font-weight:800}.brand{display:flex;align-items:center;gap:7px;font-weight:900}.brand .spr{font-size:25px}.home{font-size:25px}.decor{position:absolute;pointer-events:none;user-select:none}.cloud1{width:82px;top:74px;right:-16px}.cloud2{width:72px;top:215px;left:-22px}.heartdec{width:46px;top:275px;right:12px}.hero-title{margin-top:38px;text-align:center;position:relative;z-index:2}.bubble{display:inline-block;background:#fff4ad;border:2px solid var(--line);border-radius:24px;padding:10px 18px;font-family:'Jua';font-size:18px;box-shadow:0 3px 0 rgba(0,0,0,.08);transform:rotate(-2deg)}.logo{font-family:'Jua';font-size:58px;line-height:.9;margin:20px 0 5px;letter-spacing:-2px;text-shadow:2px 3px 0 #fff,-2px -2px 0 #fff}.logo .g{color:#63d26d;-webkit-text-stroke:2px #1c1c1c}.logo .p{color:#ff9fc1;-webkit-text-stroke:2px #1c1c1c}.logo-sub{font-family:'Jua';font-size:46px;margin:0}.subtitle{text-align:center;font-size:15px;font-weight:700;margin:14px 0}.hero-plants{height:260px;position:relative;margin-top:6px}.hero-plants img{position:absolute;object-fit:contain}.hero-plants .m{width:210px;left:5px;bottom:0}.hero-plants .s{width:130px;right:8px;bottom:22px}.hero-plants .f{width:95px;left:168px;bottom:0}.grass-strip{height:60px;background:linear-gradient(#a9ed7b,#7edb67);position:absolute;left:0;right:0;bottom:0;border-radius:50% 50% 0 0/40% 40% 0 0}.primary{width:100%;border:2px solid var(--line);border-radius:22px;background:linear-gradient(180deg,#ffb5cf,#ff94bd);font-family:'Jua';font-size:23px;padding:16px;box-shadow:0 5px 0 #202020;cursor:pointer}.primary:active{transform:translateY(3px);box-shadow:0 2px 0 #202020}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.mini{background:#fff;border-radius:18px;padding:13px 8px;text-align:center;font-size:12px;font-weight:700;box-shadow:0 3px 12px #0000000b}.mini b{display:block;font-size:15px;margin:3px}.footnote{text-align:center;font-family:'Jua';color:#287d37;margin-top:18px;font-size:15px}
+/* quiz */.quiz-wrap{padding-top:4px}.back{border:0;background:none;font-size:32px;cursor:pointer;padding:0}.counter{font-weight:900}.progress{height:12px;background:#e5e5e5;border:1.5px solid #aaa;border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px #0001}.progress>i{display:block;height:100%;width:5%;background:linear-gradient(90deg,#57c76a,#8ee887);border-radius:999px;transition:.25s}.qtitle{font-family:'Jua';font-size:29px;line-height:1.32;letter-spacing:-.5px;word-break:keep-all;overflow-wrap:break-word;margin:42px 0 28px}.answers{display:grid;gap:16px}.answer{width:100%;border:2px solid #222;border-radius:22px;padding:18px 18px;display:flex;align-items:center;gap:14px;text-align:left;background:#fff;cursor:pointer;min-height:92px;box-shadow:0 4px 0 rgba(0,0,0,.12);transition:.15s}.answer:nth-child(1){background:linear-gradient(135deg,#fff4f8,#ffe1ec)}.answer:nth-child(2){background:linear-gradient(135deg,#f0fbff,#ddf5ff)}.answer:hover{transform:translateY(-2px)}.letter{flex:0 0 44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #222;font-family:'Jua';font-size:23px}.answer:nth-child(1) .letter{background:#ff9fc1}.answer:nth-child(2) .letter{background:#ffe46a}.atext{font-size:16px;font-weight:800;line-height:1.55;word-break:keep-all}.quiz-tip{margin-top:30px;background:#fff7c9;border:1.5px solid #e9c956;border-radius:18px;padding:13px;text-align:center;font-family:'Jua';font-size:15px}
+/* loading */#loading{background:linear-gradient(#dff6ff 0%,#eaf9ff 50%,#dff8bd 100%);text-align:center}.loading-center{padding-top:120px;position:relative;z-index:2}.loading-center .sprout{font-size:36px}.loading-center h2{font-family:'Jua';font-size:31px;line-height:1.35;margin:14px}.loading-center p{font-size:15px;line-height:1.7}.grow{height:260px;position:relative;margin-top:15px}.grow .pot{font-size:120px;position:absolute;left:50%;transform:translateX(-50%);bottom:15px}.loadbar{height:20px;border:2px solid #222;background:#fff;border-radius:999px;padding:3px}.loadbar i{display:block;height:100%;width:0;background:repeating-linear-gradient(135deg,#66d75d 0 12px,#8be67e 12px 24px);border-radius:999px;animation:load 5s linear forwards}@keyframes load{to{width:100%}}.percent{font-family:'Jua';font-size:20px;margin:8px}.loading-note{font-family:'Jua';color:#3b7d3c;font-size:17px}
+/* result */.result-head{text-align:center;padding-top:8px}.result-bubble{display:inline-block;background:#fff5b8;border:2px solid #222;border-radius:28px;padding:10px 18px;font-family:'Jua';font-size:18px}.plant-name{font-family:'Jua';font-size:53px;color:#ff85b1;-webkit-text-stroke:1.7px #222;text-shadow:2px 3px 0 #fff;margin:7px 0 2px}.mbti-pill{display:inline-block;background:#e7f8df;border-radius:999px;padding:6px 14px;font-weight:900}.result-img{width:250px;height:245px;object-fit:contain;display:block;margin:5px auto}.traits{display:flex;justify-content:center;gap:8px;margin:0 0 14px}.traits span{background:#efffe8;border:1.5px solid #85d47d;border-radius:999px;padding:7px 14px;font-weight:700;font-size:13px}.quote{background:#fff7fb;border:1.5px solid #f4bfd1;border-radius:16px;padding:14px 16px;text-align:center;font-family:'Jua';font-size:18px;line-height:1.45;margin-bottom:16px}.section-card{background:#fff;border-radius:20px;border:1.5px solid #eee;padding:17px;margin:12px 0;box-shadow:0 5px 16px #0000000a}.section-title{font-family:'Jua';font-size:20px;margin-bottom:10px}.section-card p{font-size:14px;line-height:1.82;margin:10px 0;word-break:keep-all}.section-card strong{background:linear-gradient(transparent 60%,#fff0a7 60%)}.match{display:grid;grid-template-columns:95px 1fr;gap:13px;align-items:center;border-radius:18px;padding:14px;margin:12px 0}.match.good{background:#fff0f5;border:1.5px solid #ffc1d5}.match.bad{background:#edf8ff;border:1.5px solid #b5e2fa}.match img{width:92px;height:92px;object-fit:contain}.match h3{font-family:'Jua';margin:0 0 5px;font-size:19px}.match p{font-size:13px;line-height:1.55;margin:0;word-break:keep-all}.actions{display:grid;gap:10px;margin-top:18px}.share{border:2px solid #222;background:#ffe455;border-radius:18px;padding:14px;font-weight:900;font-size:16px}.restart{border:1.5px solid #bbb;background:#fff;border-radius:18px;padding:14px;font-weight:800}.alltypes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.type{background:#fff7fa;border-radius:14px;padding:7px 3px;text-align:center;font-size:10px;font-weight:700}.type img{width:60px;height:60px;object-fit:contain;display:block;margin:auto}
+@media(max-width:370px){.screen{padding-left:15px;padding-right:15px}.qtitle{font-size:26px}.logo{font-size:51px}.plant-name{font-size:47px}.answer{padding:15px 13px}.atext{font-size:15px}}
+
+/* ===== FINAL MOCKUP STYLE OVERRIDES ===== */
+:root{--pink:#ff9fc1;--pink-deep:#ff75a8;--mint:#bff3ad;--lime:#dff8b8;--yellow:#ffe76b;--sky:#c9efff;--ink:#171717;--paper:#fffdfd}
+html,body{background:#f5f2f2}.app{width:min(100%,390px);background:linear-gradient(180deg,#fff7fa 0%,#fffdfd 48%,#efffdc 100%);box-shadow:0 0 35px #00000012;border:0}.screen{padding:16px 18px 26px}.topbar{height:48px}.brand{font-family:'Jua';font-size:18px}.brand .spr{font-size:24px}.hero-title{margin-top:25px}.bubble,.result-bubble{background:#fff4a9;border:2.3px solid #171717;box-shadow:none;padding:9px 18px}.logo{font-size:55px;margin-top:18px}.logo-sub{font-size:43px}.subtitle{font-family:'Jua';font-size:16px}.hero-plants{height:270px}.hero-plants .m{width:225px;left:-6px}.hero-plants .s{width:126px;right:2px}.hero-plants .f{width:90px;left:164px}.primary{border:2.3px solid #171717;border-radius:25px;background:linear-gradient(#ffb8d1,#ff91ba);font-size:23px;box-shadow:0 4px 0 #171717}.mini{border:1.5px solid #f1e7e7;box-shadow:none;font-family:'Jua';font-size:12px}.mini b{font-size:15px}.footnote{margin-top:15px}
+#quiz{background:linear-gradient(180deg,#fff8fb 0,#fff 75%,#fffaf3 100%)}.progress{height:13px;border:1.5px solid #999;background:#e9e9e9}.progress>i{background:linear-gradient(90deg,#48c765,#78dc7e)}.qtitle{font-size:28px;line-height:1.32;margin:38px 0 26px;letter-spacing:-.7px}.answers{gap:14px}.answer{min-height:118px;border:1.8px solid #d9d9d9;border-radius:20px;box-shadow:none;padding:17px 15px;position:relative;overflow:hidden}.answer:nth-child(1){background:linear-gradient(135deg,#fff8fb 0%,#ffeaf2 100%);border-color:#ff9fc1}.answer:nth-child(2){background:linear-gradient(135deg,#f5fcff 0%,#e4f7ff 100%);border-color:#8ed8f7}.letter{width:43px;height:43px;flex-basis:43px;border:1.5px solid #222}.answer:nth-child(1) .letter{background:#ff9fc1}.answer:nth-child(2) .letter{background:#ffe15e}.atext{font-family:'Jua';font-size:18px;line-height:1.45;letter-spacing:-.25px}.answer:after{content:'☁';position:absolute;right:12px;top:8px;font-size:27px;color:#bcecff;opacity:.7}.quiz-tip{border:1.5px solid #ffd77a;background:#fff9d8;border-radius:16px}
+#loading{background:linear-gradient(180deg,#dff5ff 0%,#e9f9ff 58%,#c9f3a6 100%)}.loading-center{padding-top:86px}.loading-center h2{font-size:32px}.grow{height:290px;margin-top:8px}.grow .pot{font-size:0}.grow .pot:before{content:'🌱';font-size:150px;filter:drop-shadow(0 5px 0 #ffffffaa)}.loadbar{height:22px;border:2px solid #222}.loading-note{color:#397c3d}
+#result{background:linear-gradient(180deg,#fff7fa 0%,#fffdfd 70%,#efffdc 100%)}.result-head{position:relative}.plant-name{font-size:58px;color:#ff82b0;-webkit-text-stroke:1.8px #171717;text-shadow:2px 3px 0 #fff}.mbti-pill{font-family:'Jua';font-size:15px;background:#eaf9df}.result-img{width:275px;height:260px}.traits span{font-family:'Jua';font-size:14px;padding:7px 17px;background:#efffe8;border-color:#9bd68d}.quote{font-size:18px;background:#fff7fb;border-color:#ffb9d0}.section-card{border:1.5px solid #f0dddd;box-shadow:none;background:#fffdfd}.section-title{font-size:21px}.section-card p{font-size:14.5px;line-height:1.85}.match{grid-template-columns:105px 1fr}.match img{width:104px;height:104px}.match.good{background:linear-gradient(135deg,#fff0f5,#fff8fb);border-color:#ffb7d0}.match.bad{background:linear-gradient(135deg,#eef9ff,#f7fcff);border-color:#a9ddf4}.share{background:#ffe552;border:2px solid #222;font-family:'Jua';font-size:18px}.restart{font-family:'Jua';font-size:17px}.alltypes{grid-template-columns:repeat(4,1fr)}.type{border:1px solid #f3e8e8}.type img{width:62px;height:62px}
+.screen:after{content:'';position:absolute;left:0;right:0;bottom:0;height:25px;background:radial-gradient(circle at 12% 100%,#89df68 0 12px,transparent 13px),radial-gradient(circle at 25% 100%,#a6eb7f 0 16px,transparent 17px),radial-gradient(circle at 80% 100%,#8fe36d 0 15px,transparent 16px);pointer-events:none;opacity:.55}
+@media(max-width:370px){.qtitle{font-size:25px}.atext{font-size:17px}.plant-name{font-size:50px}}
+
+
+/* ===== V5 pixel-tuning to approved mockup ===== */
+.brand-logo{width:25px;height:25px;object-fit:contain;display:block}.brand{gap:6px}
+#start{background:linear-gradient(180deg,#fff9fb 0%,#fffdfd 53%,#edffd8 100%)}
+#start:before,#start:after{content:"";position:absolute;z-index:0;pointer-events:none;background-repeat:no-repeat;background-size:contain;opacity:.95}
+#start:before{width:110px;height:80px;right:-18px;top:75px;background-image:url('assets/decorations/cloud_01.png')}
+#start:after{width:130px;height:90px;left:-35px;top:260px;background-image:url('assets/decorations/cloud_02.png')}
+.hero-title,.subtitle,.hero-plants,.primary,.mini-grid,.footnote,.topbar{position:relative;z-index:2}
+.hero-plants:before{content:"";position:absolute;left:-18px;right:-18px;bottom:-2px;height:78px;background:linear-gradient(180deg,#a9ef83,#7ddf67);border-radius:55% 55% 0 0/35% 35% 0 0;z-index:-1}
+.hero-plants:after{content:"✿  ❀  ✿";position:absolute;left:15px;right:10px;bottom:4px;color:#fff;font-size:22px;letter-spacing:40px;text-shadow:0 0 0 #ffd36a}
+#quiz{background:#fffdfd}.qtitle{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-weight:750;font-size:25px;line-height:1.42;letter-spacing:-.65px;margin:38px 0 26px}
+.atext{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-weight:600;font-size:16px;line-height:1.55;letter-spacing:-.35px}
+.answer{min-height:105px}.answer:after{font-size:24px;opacity:.45}.quiz-footer{position:absolute;left:0;right:0;bottom:18px;text-align:center;color:#aaa;font-size:11px;letter-spacing:.4px}
+#quiz:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:#efefef}
+#loading{background:linear-gradient(180deg,#d9f4ff 0%,#e9f9ff 55%,#e5ffd0 100%)}
+.loading-logo{width:38px;height:38px;object-fit:contain}.loading-center{padding-top:75px}.loading-center h2{font-size:29px}.run-scene{height:280px;display:flex;align-items:flex-end;justify-content:center;position:relative;margin-top:4px;overflow:hidden}
+.run-scene:before{content:"";position:absolute;left:-30px;right:-30px;bottom:0;height:100px;background:linear-gradient(#b8ef8e,#83df6d);border-radius:50% 50% 0 0/30% 30% 0 0}
+.run-scene:after{content:"✿   ❀   ✿   ❀";position:absolute;bottom:16px;left:20px;color:white;font-size:20px;letter-spacing:16px}
+.run-scene img{width:255px;max-height:215px;object-fit:contain;position:relative;z-index:2;animation:runbob .55s ease-in-out infinite alternate;filter:drop-shadow(0 5px 1px rgba(0,0,0,.08))}@keyframes runbob{from{transform:translateY(2px)}to{transform:translateY(-5px)}}
+#loading:before{content:"";position:absolute;width:95px;height:65px;right:-10px;top:65px;background:url('assets/decorations/cloud_01.png') center/contain no-repeat;opacity:.95}
+#loading:after{content:"";position:absolute;width:80px;height:60px;left:-18px;top:190px;background:url('assets/decorations/cloud_02.png') center/contain no-repeat;opacity:.9}
+.result-img{width:205px;height:215px;image-rendering:auto;filter:drop-shadow(0 7px 1px rgba(0,0,0,.08));transform:translateZ(0)}
+.match img{width:88px;height:92px;image-rendering:auto}.type img{width:58px;height:62px;image-rendering:auto}
+#result{background:linear-gradient(180deg,#fff9fb,#fffdfd 70%,#f1ffe5)}
+@media(max-width:370px){.qtitle{font-size:23px}.atext{font-size:15px}.result-img{width:190px;height:200px}}
+
+/* ===== v6 polish: clean logo, unclipped decor, sharper imagery ===== */
+.brand-text{font-family:'Jua','Malgun Gothic',sans-serif;font-size:20px;font-weight:900;letter-spacing:.4px;color:#171717}
+.brand-logo{display:none!important}
+#start{overflow:hidden;background:linear-gradient(180deg,#fff8fb 0%,#fffdfd 63%,#efffdc 100%)}
+#start:before,#start:after{display:none!important}
+#start .cloud1{width:108px;top:70px;right:8px;opacity:.92}
+#start .cloud2{width:100px;top:235px;left:6px;opacity:.90}
+#start .decor{max-width:30%;height:auto;object-fit:contain}
+.hero-plants img,.result-img,.match img,.type img{image-rendering:auto;backface-visibility:hidden;transform:translateZ(0)}
+#quiz{overflow:hidden}.quiz-footer{bottom:22px;color:#aaa;font-size:11px;font-weight:500;letter-spacing:.2px}
+.qtitle{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-weight:700;font-size:27px;line-height:1.42;letter-spacing:-.7px}
+.atext{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-weight:600;font-size:16px;line-height:1.55;letter-spacing:-.3px}
+.answer{min-height:108px}
+.answer:after{display:none}
+#loading{overflow:hidden;background:linear-gradient(180deg,#dff6ff 0%,#eaf9ff 54%,#e8ffd8 100%)}
+#loading:before,#loading:after{display:none!important}
+#loading .cloud1{width:105px;top:62px;right:8px;opacity:.95}
+#loading .cloud2{width:92px;top:188px;left:8px;opacity:.9}
+.loading-center{padding-top:78px}
+.loading-brand{font-family:'Jua','Malgun Gothic',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;margin-bottom:12px;color:#2a2a2a}
+.loading-center h2{font-size:30px;margin-top:8px}
+.run-scene{height:235px;margin:18px -4px 8px;border-radius:26px;overflow:hidden;position:relative;background:linear-gradient(180deg,#dff6ff 0 58%,#baf08f 58% 100%)}
+.run-scene:before{content:'';position:absolute;left:18px;right:18px;bottom:18px;height:55px;background:rgba(117,211,82,.28);border-radius:50%}
+.run-scene img{width:92%;height:100%;object-fit:contain;object-position:center 58%;position:relative;z-index:1;filter:saturate(.92) contrast(1.02)}
+.result-img{width:205px;height:210px;margin:10px auto 5px}
+.match img{width:82px;height:82px}.match{grid-template-columns:85px 1fr}
+.type img{width:54px;height:54px}
+@media(max-width:370px){.qtitle{font-size:25px}.atext{font-size:15px}.result-img{width:190px;height:195px}}
+
+
+/* ===== v7 mobile viewport + complete decoration assets ===== */
+html,body{height:100%;overflow-x:hidden}.app{min-height:100dvh}.screen:not(#result){height:100dvh;min-height:0;overflow:hidden}.screen#result{min-height:100dvh;height:auto;overflow:visible}
+#start .cloud1{width:88px;top:58px;right:14px}#start .cloud2{width:78px;top:205px;left:10px}.decor{object-fit:contain}
+#start{padding:10px 18px 12px;display:none;flex-direction:column}#start.active{display:flex}.topbar{height:40px;flex:0 0 auto}.hero-title{margin-top:10px;flex:0 0 auto}.bubble{padding:7px 15px;font-size:16px}.logo{font-size:48px;margin:11px 0 2px}.logo-sub{font-size:38px}.subtitle{font-size:14px;margin:8px 0 2px}.hero-plants{height:min(28vh,230px);min-height:165px;margin-top:0;flex:1 1 auto}.hero-plants .m{width:min(49vw,190px)}.hero-plants .s{width:min(29vw,112px)}.hero-plants .f{width:min(21vw,82px);left:43%}.primary{padding:13px;font-size:21px;flex:0 0 auto}.mini-grid{gap:7px;margin-top:10px;flex:0 0 auto}.mini{padding:7px 5px;font-size:10px;border-radius:14px}.mini b{font-size:13px;margin:1px}.footnote{margin-top:8px;font-size:13px;flex:0 0 auto}
+#quiz{padding:10px 18px 12px}.qtitle{font-size:clamp(22px,6.4vw,27px);margin:24px 0 20px;line-height:1.38}.answers{gap:12px}.answer{min-height:clamp(88px,15vh,108px);padding:14px}.atext{font-size:clamp(14px,4.1vw,16px);font-weight:550}.quiz-footer{bottom:10px}
+#loading{padding:10px 18px 12px}.loading-center{padding-top:34px;height:100%;display:flex;flex-direction:column;align-items:stretch}.loading-brand{margin-bottom:2px}.loading-center h2{font-size:28px;margin:4px 0 7px}.loading-center p{margin:3px 0 5px;line-height:1.55}.run-scene{height:min(34vh,260px);min-height:190px;margin:8px 0 7px;border-radius:24px;overflow:hidden;background:#dff6ff}.run-scene:before,.run-scene:after{display:none}.run-scene img{width:100%;height:100%;object-fit:cover;object-position:center center;animation:runbob .55s ease-in-out infinite alternate;filter:none}.loadbar{margin-top:auto}.percent{margin:5px}.loading-note{font-size:15px;margin-bottom:4px}#loading .cloud1{width:82px;top:30px;right:10px}#loading .cloud2{width:72px;top:135px;left:8px}
+.result-img{width:min(52vw,200px);height:auto;max-height:205px;object-fit:contain;filter:none}.match img,.type img{filter:none}
+/* ===== v8 start-page spacing refinement ===== */
+#start .hero-plants{flex:0 0 auto;height:clamp(190px,27vh,235px);min-height:0;margin-top:6px}
+#start .subtitle{margin-bottom:8px}
+#start .primary{margin-top:4px}
+@media(min-height:741px){#start .hero-title{margin-top:6px}#start .hero-plants{height:clamp(205px,29vh,245px)}#start .mini-grid{margin-top:9px}#start .footnote{margin-top:7px}}
+@media(max-height:740px){#start .hero-plants{height:clamp(155px,25vh,185px);min-height:0;margin-top:2px}}
+@media(max-height:740px){#start .topbar{height:34px}.hero-title{margin-top:3px}.bubble{padding:5px 12px;font-size:14px}.logo{font-size:42px;margin:7px 0 0}.logo-sub{font-size:33px}.subtitle{font-size:12px;margin:5px 0}.hero-plants{height:24vh;min-height:145px}.primary{padding:10px;font-size:19px}.mini-grid{margin-top:7px}.mini{padding:5px 4px}.footnote{margin-top:5px;font-size:11px}.qtitle{margin:18px 0 16px}.answer{min-height:82px}.loading-center{padding-top:20px}.loading-center h2{font-size:25px}.run-scene{min-height:170px;height:30vh}}
+
+
+
+/* ==== V10 requested layout / typography / loading animation ==== */
+html,body{font-family:'Gowun Dodum','Malgun Gothic',sans-serif}
+button{font-family:'Gowun Dodum','Malgun Gothic',sans-serif}
+.brand,.loading-brand,.bubble,.result-bubble,.plant-name,.logo,.logo-sub,.section-title,.quote,.mini b,.percent{font-family:'Black Han Sans','Gowun Dodum',sans-serif;font-weight:400}
+
+#start,#quiz,#loading{height:100vh;min-height:100vh;overflow:hidden}
+#result{min-height:100vh;overflow:auto}
+.source-footer{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;text-align:center;font-size:12px;font-weight:700;color:#70808b;letter-spacing:-.1px}
+.source-footer span{padding:0 8px;color:#9ba4aa}
+.screen-footer{position:absolute;left:18px;right:18px;bottom:10px;z-index:10}
+
+/* start */
+#start{background:#e9f8ff url('assets/ui/loading_background.png') center/cover no-repeat;padding:16px 18px 14px}
+#start .start-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.24) 58%,rgba(255,255,255,.42) 100%);pointer-events:none}
+#start>*:not(.start-overlay){position:relative;z-index:2}
+.start-topbar{height:auto;display:block;padding-top:2px}
+.start-topbar .brand{font-size:20px;letter-spacing:.2px;text-align:left}
+.brand-sub{margin-top:15px;text-align:right;font-size:13px;font-weight:700;color:#4b9462}
+.start-hero-title{margin-top:28px;text-align:center}
+#start .bubble{display:inline-block;font-size:16px;padding:9px 18px;background:#fff4ad;border:2px solid #222;border-radius:24px;transform:rotate(-2deg)}
+#start .logo{font-size:55px;letter-spacing:-1.2px;margin:16px 0 0;line-height:.95;text-shadow:2px 3px 0 #fff,-2px -2px 0 #fff}
+#start .logo .g{color:#58cf69;-webkit-text-stroke:2px #1c1c1c}
+#start .logo .p{color:#ff93ba;-webkit-text-stroke:2px #1c1c1c}
+#start .logo-sub{font-size:41px;margin:2px 0 0;line-height:1}
+#start .subtitle{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:14px;font-weight:700;margin:12px 0 4px}
+#start .hero-plants{height:200px;margin-top:-2px}
+#start .hero-plants .m{width:184px;left:5px;bottom:-8px}
+#start .hero-plants .s{width:108px;right:8px;bottom:8px}
+#start .hero-plants .f{width:72px;left:163px;bottom:-9px}
+#start .grass-strip{height:52px;background:linear-gradient(rgba(168,235,120,.8),rgba(116,209,94,.82))}
+.start-spacer.one-line{height:10px}
+.start-spacer.five-lines{height:34px}
+#start .primary{margin-top:0;padding:14px 14px;font-family:'Black Han Sans','Gowun Dodum',sans-serif;font-size:21px;border:2px solid #222;border-radius:24px;background:linear-gradient(#ffb5cf,#ff91ba);box-shadow:0 4px 0 #202020}
+#start .mini-grid{margin-top:14px;gap:10px}
+#start .mini{padding:12px 7px;background:rgba(255,255,255,.9);border:1.3px solid rgba(210,190,200,.58);border-radius:17px;font-size:11.5px;font-weight:700;line-height:1.42;box-shadow:0 3px 10px rgba(0,0,0,.035)}
+#start .mini b{display:block;font-size:17px;line-height:1.08;margin:0 0 5px;color:#222}
+#start .mini span{display:block}
+#start .source-footer{margin-top:0;color:#6e7d86}
+
+/* quiz */
+#quiz{background:linear-gradient(180deg,#fff8fb 0,#fff 74%,#f7fff1 100%);padding-bottom:38px}
+#quiz .topbar{height:40px}
+#quiz .counter{font-size:15px;font-weight:700}
+#quiz .progress{margin-top:4px}
+#quiz .qtitle{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:23px;font-weight:700;line-height:1.45;letter-spacing:-.45px;margin:30px 0 22px}
+#quiz .answer{min-height:108px;border-radius:20px;padding:17px 16px}
+#quiz .letter{font-family:'Black Han Sans','Gowun Dodum',sans-serif;font-size:22px}
+#quiz .atext{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:16px;font-weight:700;line-height:1.56}
+#quiz .answer:after{font-size:22px;top:10px;right:12px;opacity:.38}
+#quiz .quiz-footer{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:11px;color:#98a0a4;margin-top:14px}
+
+/* loading */
+#loading{background:linear-gradient(180deg,#dff6ff 0%,#e8f7ff 56%,#e7f7d4 100%);padding:14px 18px 42px}
+.loading-center{padding-top:10px;position:relative;z-index:2}
+.loading-brand{font-size:20px;letter-spacing:.8px}
+.loading-center h2{font-family:'Black Han Sans','Gowun Dodum',sans-serif;font-size:27px;line-height:1.35;margin:8px 0 10px}
+.loading-center p{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:14px;font-weight:700;line-height:1.68;margin:0 0 12px}
+.run-scene{position:relative;height:260px;border-radius:28px;overflow:hidden;margin:16px 0 15px;background:#dff6ff;border:1px solid rgba(255,255,255,.65)}
+.scene-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.runner,.runner-meeting{position:absolute;bottom:18px;display:block;object-fit:contain;will-change:transform,opacity}
+.runner-girl{width:152px;height:158px;left:-28px;transform:translateX(0)}
+.runner-dog{width:138px;height:142px;right:-24px;transform:translateX(0)}
+.runner-meeting{width:408px;height:312px;left:50%;bottom:16px;transform:translateX(-50%) scale(.98);opacity:0}
+.run-scene.meeting .runner{opacity:0}
+.run-scene.meeting .runner-meeting{opacity:1;transform:translateX(-50%) scale(1)}
+#loading .loadbar{height:19px;margin-top:4px}
+#loading .percent{font-size:18px;margin:7px 0 3px}
+#loading .loading-note{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:14px;font-weight:700;color:#3c8b48}
+
+/* result */
+#result{background:linear-gradient(180deg,#fff7fa 0%,#fffdfd 70%,#efffdc 100%);padding-bottom:24px}
+#result .topbar{height:42px}
+#result .brand{font-size:18px}
+.home-btn{border:0;background:none;padding:0;width:34px;height:34px;display:grid;place-items:center;cursor:pointer}
+.home-btn img{width:29px;height:29px;display:block;object-fit:contain}
+.result-head{position:relative;overflow:hidden;border-radius:24px;padding:18px 14px 16px;margin:8px 0 16px;background:#e6f8ff url('assets/ui/loading_background.png') center/cover no-repeat;border:1.3px solid rgba(118,190,214,.35)}
+.result-head:before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.32)}
+.result-head>*{position:relative;z-index:2}
+.result-bubble{font-size:16px;padding:8px 16px}
+.plant-name{font-size:50px;color:#ff82b0;-webkit-text-stroke:1.5px #171717;text-shadow:2px 3px 0 #fff;margin:6px 0 2px}
+.mbti-pill{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:14px;font-weight:700;background:rgba(239,255,232,.92)}
+.result-img{width:255px;height:235px}
+.traits span{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:13px;font-weight:700;background:rgba(239,255,232,.94)}
+.quote{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:16px;font-weight:700;line-height:1.55;background:rgba(255,247,251,.92)}
+.section-card,.result-step-card{background:#fff;border-radius:20px;border:1.3px solid #ece6e8;padding:16px;margin:12px 0;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+.section-title{font-size:18px;margin-bottom:9px}
+.section-card p,.result-step-card p{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-size:14px;line-height:1.78;margin:9px 0;word-break:keep-all}
+.match{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center;border-radius:17px;padding:13px;margin:0}
+.match img{width:86px;height:86px;object-fit:contain}
+.match h3{font-family:'Black Han Sans','Gowun Dodum',sans-serif;font-weight:400;font-size:17px;margin:0 0 5px}
+.match p{font-size:13px;line-height:1.55;margin:0}
+.result-step-card.good-card{background:#fff6fa;border-color:#ffd4e4}
+.result-step-card.bad-card{background:#f2faff;border-color:#cdeafb}
+.actions{display:grid;gap:10px;margin:14px 0}
+.share,.restart{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;font-weight:700}
+.result-footer{margin-top:22px;padding-bottom:4px}
+
+@media(max-height:760px){
+  #start .brand-sub{margin-top:9px}
+  .start-hero-title{margin-top:16px}
+  #start .logo{font-size:47px}
+  #start .logo-sub{font-size:35px}
+  #start .hero-plants{height:170px}
+  #start .primary{padding:11px}
+  #start .mini-grid{margin-top:9px}
+  #start .mini{padding:8px 6px}
+  #start .mini b{font-size:15px}
+  .start-spacer.five-lines{height:18px}
+  .run-scene{height:220px}
+}
+
+
+/* ==== V11 polish ==== */
+/* typography */
+html,body,button{font-family:'Gowun Dodum','Malgun Gothic',sans-serif}
+.brand,.loading-brand,.bubble,.result-bubble,.plant-name,.logo,.logo-sub,.section-title,.percent{font-family:'Black Han Sans','Gowun Dodum',sans-serif;font-weight:400}
+#start .mini,#start .mini b,#start .mini span{font-family:'Gowun Dodum','Malgun Gothic',sans-serif!important}
+#start .mini b{font-size:17px!important;font-weight:700!important;letter-spacing:-.2px}
+#start .mini span{font-weight:700}
+.quote{font-family:'Gowun Dodum','Malgun Gothic',sans-serif!important;font-weight:700}
+
+/* common copyright */
+.copyright-footer{font-family:'Gowun Dodum','Malgun Gothic',sans-serif;text-align:center;font-size:10.5px;font-weight:700;color:#899196;letter-spacing:.05px}
+#start .copyright-footer,#quiz .copyright-footer,#loading .copyright-footer{position:absolute;left:12px;right:12px;bottom:7px;z-index:20}
+#result .copyright-footer{margin:24px 0 2px}
+
+/* start richness */
+#start{background:#dff5ff url('assets/ui/loading_background.png') center top/cover no-repeat;padding-bottom:28px}
+#start:after{content:'';position:absolute;z-index:0;left:0;right:0;bottom:0;height:46%;background:linear-gradient(180deg,rgba(139,227,106,.98) 0%,rgba(176,235,137,.94) 23%,rgba(213,244,190,.93) 58%,rgba(244,251,237,.97) 100%);pointer-events:none}
+#start .start-overlay{background:linear-gradient(180deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.14) 48%,rgba(255,255,255,0) 100%)}
+#start .hero-plants{z-index:2}
+#start .primary{position:relative;z-index:3;margin-top:-2px}
+#start .mini-grid{position:relative;z-index:3}
+#start .start-spacer.five-lines{height:12px}
+#start .source-footer{display:none!important}
+.start-decor{position:absolute;z-index:1;pointer-events:none;object-fit:contain}
+.start-cloud-a{width:66px;top:112px;right:-5px;opacity:.96}
+.start-cloud-b{width:58px;top:245px;left:-7px;opacity:.92}
+.start-heart-a{width:28px;top:87px;left:20px;transform:rotate(-12deg)}
+.start-heart-b{width:21px;top:295px;right:25px;transform:rotate(12deg)}
+.start-sparkle-a{width:25px;top:173px;right:18px}
+.start-leaf-a{width:27px;top:210px;left:20px;transform:rotate(-18deg)}
+.start-leaf-b{width:31px;top:330px;right:18px;transform:rotate(22deg)}
+
+/* loading animation: intentionally start from outside and meet dead-center */
+#loading{padding-bottom:34px}
+.run-scene{height:260px;margin:14px 0 14px}
+.runner,.runner-meeting{top:50%;bottom:auto;will-change:transform,opacity,left,right}
+.runner-girl{width:150px;height:160px;left:-118px;right:auto;transform:translateY(-50%)}
+.runner-dog{width:140px;height:145px;right:-108px;left:auto;transform:translateY(-50%)}
+.runner-meeting{width:265px;height:205px;left:50%;top:50%;bottom:auto;transform:translate(-50%,-50%) scale(.96);opacity:0}
+.run-scene.meeting .runner{opacity:0!important}
+.run-scene.meeting .runner-meeting{opacity:1!important;transform:translate(-50%,-50%) scale(1)}
+
+/* result enrichment */
+#result{padding-bottom:18px}
+.result-head{isolation:isolate}
+.result-head:after{content:'';position:absolute;width:46px;height:46px;right:12px;top:16px;background:url('assets/decorations/sparkle_01.png') center/contain no-repeat;z-index:1;opacity:.92}
+.result-head .result-heart-decor{position:absolute;width:40px;left:12px;top:118px;z-index:2;transform:rotate(-11deg)}
+.result-head .result-sparkle-decor{position:absolute;width:34px;right:18px;bottom:100px;z-index:2}
+.result-head .result-leaf-decor{position:absolute;width:38px;left:16px;bottom:118px;z-index:2;transform:rotate(-16deg)}
+.result-step-card{position:relative;overflow:hidden}
+.result-step-card.good-card:after{content:'';position:absolute;width:26px;height:26px;right:11px;top:9px;background:url('assets/decorations/heart_01.png') center/contain no-repeat;opacity:.7}
+.result-step-card.bad-card:after{content:'';position:absolute;width:25px;height:25px;right:12px;top:10px;background:url('assets/decorations/sparkle_01.png') center/contain no-repeat;opacity:.72}
+.result-step-card:not(.good-card):not(.bad-card):nth-of-type(2):after{content:'';position:absolute;width:24px;height:24px;right:12px;top:11px;background:url('assets/decorations/leaf_01.png') center/contain no-repeat;opacity:.62}
+
+@media(max-height:760px){
+  #start .start-spacer.five-lines{height:4px}
+  #start .mini{padding:7px 6px}
+  #start .mini b{font-size:15px!important}
+  #start:after{height:48%}
+  .run-scene{height:220px}
+}
+
+
+/* ==== V12: first screen layout + loading scene fix ==== */
+/* First screen: keep the sky clean and use the landscape only around the plants. */
+#start{background:linear-gradient(180deg,#e2f7ff 0%,#eefbff 48%,#efffdc 100%)!important;padding:12px 18px 28px!important}
+#start:after{content:''!important;position:absolute!important;left:0!important;right:0!important;top:58%!important;bottom:0!important;height:auto!important;background:linear-gradient(180deg,#91e96d 0%,#b8ee8d 26%,#d7f5bd 58%,#f2fbe9 100%)!important;z-index:0!important;pointer-events:none!important}
+#start .start-overlay{display:none!important}
+#start .topbar{height:auto!important;min-height:58px!important;margin-bottom:10px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
+#start .brand{align-self:flex-start!important;font-size:20px!important;line-height:1!important}
+#start .brand-sub{align-self:flex-end!important;margin-top:15px!important;font-size:13px!important;line-height:1.2!important}
+#start .hero-title{margin-top:8px!important}
+#start .bubble{font-size:15px!important;padding:8px 17px!important}
+#start .logo{font-size:51px!important;margin:12px 0 1px!important}
+#start .logo-sub{font-size:38px!important}
+#start .subtitle{margin:11px 0 8px!important;font-size:13.5px!important}
+#start .hero-plants{height:218px!important;margin:0 -18px!important;position:relative!important;overflow:hidden!important;background:url('assets/ui/loading_background.png') center 67%/cover no-repeat!important;z-index:2!important}
+#start .hero-plants:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(226,247,255,.15) 0%,rgba(226,247,255,0) 55%,rgba(126,224,93,.15) 100%);pointer-events:none;z-index:0}
+#start .hero-plants .grass-strip{display:none!important}
+#start .hero-plants img{z-index:2!important}
+#start .hero-plants .m{width:180px!important;left:22px!important;bottom:-4px!important}
+#start .hero-plants .s{width:104px!important;right:28px!important;bottom:11px!important}
+#start .hero-plants .f{width:70px!important;left:48%!important;bottom:-4px!important}
+#start .primary{margin-top:8px!important;padding:13px 12px!important}
+#start .mini-grid{margin-top:12px!important;gap:10px!important}
+#start .mini{padding:10px 7px!important}
+#start .copyright-footer{bottom:6px!important}
+/* decorative assets are smaller and confined to open sky areas */
+.start-cloud-a{width:54px!important;top:92px!important;right:10px!important;opacity:.95!important}
+.start-cloud-b{width:46px!important;top:210px!important;left:8px!important;opacity:.9!important}
+.start-heart-a{width:19px!important;top:121px!important;left:32px!important}
+.start-heart-b{width:16px!important;top:280px!important;right:22px!important}
+.start-sparkle-a{width:19px!important;top:178px!important;right:33px!important}
+.start-leaf-a{width:20px!important;top:247px!important;left:29px!important}
+.start-leaf-b{width:22px!important;top:322px!important;right:27px!important}
+
+/* Loading page: background stays fixed, characters are ~70% of previous size. */
+#loading{background:linear-gradient(180deg,#e4f7ff 0%,#effbdc 100%)!important}
+#loading .loading-center{padding-top:24px!important}
+#loading .run-scene{height:245px!important;margin:12px 0 12px!important;border-radius:26px!important;overflow:hidden!important;position:relative!important;background:#dff6ff!important}
+#loading .scene-bg-img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important;object-position:center center!important;z-index:0!important;animation:none!important;transform:none!important;filter:none!important;opacity:1!important}
+#loading .runner,#loading .runner-meeting{position:absolute!important;top:50%!important;bottom:auto!important;z-index:2!important;object-fit:contain!important;animation:none!important;filter:none!important;opacity:1;will-change:left,right,opacity,transform}
+#loading .runner-girl{width:105px!important;height:112px!important;left:-82px!important;right:auto!important;transform:translateY(-50%)!important}
+#loading .runner-dog{width:98px!important;height:102px!important;right:-76px!important;left:auto!important;transform:translateY(-50%)!important}
+#loading .runner-meeting{width:195px!important;height:150px!important;left:50%!important;right:auto!important;top:50%!important;transform:translate(-50%,-50%) scale(.98)!important;opacity:0!important}
+#loading .run-scene.meeting .runner{opacity:0!important}
+#loading .run-scene.meeting .runner-meeting{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important}
+@media(max-height:760px){
+  #start .topbar{min-height:50px!important;margin-bottom:4px!important}
+  #start .brand-sub{margin-top:10px!important}
+  #start .hero-title{margin-top:3px!important}
+  #start .hero-plants{height:178px!important}
+  #start .logo{font-size:45px!important}
+  #start .logo-sub{font-size:34px!important}
+  #start .mini{padding:7px 6px!important}
+  #loading .run-scene{height:210px!important}
+}
+
+
+/* ==== V13: clean first page + precise loading motion ==== */
+#start .start-decor{display:none!important}
+#loading .run-scene{position:relative!important;height:245px!important;overflow:hidden!important;border-radius:26px!important;background:#dff6ff url('assets/ui/loading_background.png') center/cover no-repeat!important}
+#loading .scene-bg-img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;z-index:0!important;animation:none!important;transform:none!important;opacity:1!important}
+#loading .runner,#loading .runner-meeting{position:absolute!important;z-index:2!important;object-fit:contain!important;animation:none!important;filter:none!important;will-change:left,right,transform,opacity!important}
+#loading .runner-girl{width:90px!important;height:96px!important;left:12px!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;opacity:1!important}
+#loading .runner-dog{width:84px!important;height:87px!important;right:12px!important;left:auto!important;top:50%!important;transform:translateY(-50%)!important;opacity:1!important}
+#loading .runner-meeting{width:148px!important;height:96px!important;left:50%!important;right:auto!important;top:50%!important;transform:translate(-50%,-50%) scale(.98)!important;opacity:0!important}
+#loading .run-scene.meeting .runner{opacity:0!important}
+#loading .run-scene.meeting .runner-meeting{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important}
+@media(max-height:760px){#loading .run-scene{height:210px!important}#loading .runner-girl{width:82px!important;height:88px!important}#loading .runner-dog{width:77px!important;height:80px!important}#loading .runner-meeting{width:127px!important;height:82px!important}}
+
+</style></head><body><main class="app">
+<section id="start" class="screen active">
+  <div class="start-overlay"></div>
+  <div class="topbar start-topbar">
+    <div class="brand brand-text">J LAB</div>
+    <div class="brand-sub">나와 닮은 식물을 찾아보세요!</div>
+  </div>
+  <div class="hero-title start-hero-title">
+    <div class="bubble">당신과 닮은 식물은?</div>
+    <div class="logo"><span class="g">식물</span> <span class="p">MBTI</span></div>
+    <h1 class="logo-sub">테스트</h1>
+    <p class="subtitle">당신의 성격과 닮은 식물을 찾아드려요!</p>
+  </div>
+  <div class="hero-plants"><div class="grass-strip"></div><img class="m" src="assets/characters/monstera.png"><img class="s" src="assets/characters/sunflower.png"><img class="f" src="assets/characters/freesia.png"></div>
+  <div class="start-spacer one-line"></div>
+  <button class="primary" onclick="startQuiz()">테스트 시작하기</button>
+  <div class="mini-grid">
+    <div class="mini"><b>총 20문항</b><span>간단한 선택으로 알아보는 나!</span></div>
+    <div class="mini"><b>16가지 식물 유형</b><span>귀여운 캐릭터와 함께!</span></div>
+    <div class="mini"><b>나만의 식물 성격</b><span>강점과 매력을 확인!</span></div>
+    <div class="mini"><b>식물 궁합까지</b><span>잘 맞는 친구도 알려드려요!</span></div>
+  </div>
+  <div class="start-spacer five-lines"></div>
+  
+  <div class="copyright-footer">© 2026 J LAB. All rights reserved.</div>
+</section>
+<section id="quiz" class="screen"><div class="topbar"><button class="back" onclick="prevQ()">‹</button><div class="counter"><span id="qnum">1</span> / 20</div></div><div class="progress"><i id="prog"></i></div><div class="quiz-wrap"><h2 id="qtitle" class="qtitle"></h2><div id="answers" class="answers"></div><div class="quiz-footer"></div></div><div class="copyright-footer">© 2026 J LAB. All rights reserved.</div></section>
+<section id="loading" class="screen">
+  <div class="loading-center">
+    <div class="loading-brand">J LAB</div>
+    <h2>결과를 열심히<br>분석 중이에요...</h2>
+    <p>당신의 답변을 바탕으로<br>딱 맞는 식물을 찾고 있어요!</p>
+    <div class="run-scene" id="runScene">
+      <img class="scene-bg-img" src="assets/ui/loading_background.png" alt="">
+      <img class="runner runner-girl" id="runnerGirl" src="assets/ui/runner_girl.png" alt="달리는 여자 캐릭터">
+      <img class="runner runner-dog" id="runnerDog" src="assets/ui/running_dog.png" alt="달리는 강아지 캐릭터">
+      <img class="runner-meeting" id="runnerMeeting" src="assets/ui/girl_dog_meeting.png" alt="만난 여자 캐릭터와 강아지">
+    </div>
+    <div class="loadbar"><i></i></div>
+    <div class="percent" id="pct">0%</div>
+    <div class="loading-note" id="loadnote">당신과 닮은 식물을 찾고 있어요...</div>
+  </div>
+  <div class="copyright-footer">© 2026 J LAB. All rights reserved.</div>
+</section>
+<section id="result" class="screen"><div class="topbar"><div class="brand brand-text">J LAB</div><button class="home-btn" onclick="goStart()"><img src="assets/ui/home_icon.png" alt="홈"></button></div><div id="resultContent"></div><div class="copyright-footer">© 2026 J LAB. All rights reserved.</div></section>
+</main>
+<script>
+const Q=[
+['기다리던 주말, 갑자기 하루가 통째로 비었다!','이왕 시간 생긴 거 누구 만날 사람 없나 연락해 본다.','오히려 좋아. 아무 약속 없이 온전히 내 시간을 즐긴다.','E','I'],
+['처음 가는 여행지를 준비할 때 나는?','숙소, 이동 동선, 가볼 곳 정도는 미리 정해둔다.','꼭 필요한 것만 정하고 나머지는 그날 기분에 맡긴다.','J','P'],
+['친구가 “오늘 회사에서 진짜 최악이었어”라고 한다.','무슨 일이 있었는지 들어보고 같이 해결 방법을 찾아본다.','얼마나 힘들었을지 공감하며 이야기를 들어준다.','T','F'],
+['새로운 취미를 시작할 때 나는?','기본 방법을 하나씩 익히며 직접 해본다.','이것저것 알아보다 나만의 방식으로 응용해본다.','S','N'],
+['아는 사람이 거의 없는 모임에 가게 됐다.','새로운 사람을 만날 생각에 은근히 기대된다.','재미있을 것 같지만 벌써 에너지가 필요할 것 같다.','E','I'],
+['할 일이 한꺼번에 몰렸을 때 나는?','해야 할 일을 정리하고 순서를 정한다.','일단 지금 손에 잡히는 것부터 시작한다.','J','P'],
+['친구가 중요한 결정을 앞두고 의견을 묻는다.','장단점과 현실적인 조건을 같이 따져본다.','어떤 선택이 친구를 더 행복하게 할지 생각해본다.','T','F'],
+['새로운 기기의 설명서를 볼 때 나는?','구체적인 예시와 사용법부터 확인한다.','전체적인 원리를 이해한 뒤 세부 기능을 익힌다.','S','N'],
+['즐거운 모임이 끝난 뒤 나는?','아쉬워서 이야기를 조금 더 하고 싶다.','이제는 조용히 혼자 있는 시간이 필요하다.','E','I'],
+['가고 싶던 맛집의 대기 시간이 1시간이라면?','원래 계획한 곳이니 기다려서 먹는다.','근처의 괜찮아 보이는 다른 곳으로 바꾼다.','J','P'],
+['친구가 함께 준비한 일에서 실수했다.','어디서 문제가 생겼는지 먼저 확인한다.','친구가 너무 자책하고 있지는 않은지 먼저 살핀다.','T','F'],
+['누군가 엉뚱한 사업 아이디어를 이야기한다.','실제로 하려면 비용과 준비가 얼마나 필요할지 생각한다.','잘되면 이것도 저것도 가능하겠다며 상상이 이어진다.','S','N'],
+['새롭게 관심 가는 것이 생기면 나는?','주변 사람에게 이야기하고 같이 할 사람을 찾아본다.','혼자 이것저것 찾아보며 깊이 빠져든다.','E','I'],
+['한 달 뒤 중요한 일정이 있다면?','지금부터 조금씩 준비해두는 편이다.','날짜가 가까워졌을 때 집중해서 준비하는 편이다.','J','P'],
+['친구 둘이 싸우고 내 의견을 묻는다.','누구의 말이 더 근거가 있는지 생각해본다.','양쪽이 왜 그렇게 느꼈는지 먼저 생각해본다.','T','F'],
+['영화를 본 뒤 이야기할 때 나는?','기억에 남는 장면이나 실제 내용에 대해 이야기한다.','영화의 의미나 숨은 설정에 대해 이야기하는 게 재미있다.','S','N'],
+['정신없는 한 주가 끝난 금요일 밤, 나는?','좋아하는 사람을 만나 떠들면서 스트레스를 푼다.','혼자 조용히 쉬면서 에너지를 충전한다.','E','I'],
+['내일 갑자기 하루 휴가가 생겼다.','오늘 대략 무엇을 할지 정해둔다.','내일 일어나서 그때 하고 싶은 걸 정한다.','J','P'],
+['나와 정반대의 의견을 가진 사람을 만났다.','왜 그렇게 생각하는지 근거가 궁금하다.','왜 그렇게 느끼게 됐는지 그 사람의 이유가 궁금하다.','T','F'],
+['새로운 장소에 다녀온 뒤 기억에 남는 것은?','음식, 풍경, 있었던 일 같은 구체적인 경험이다.','그곳의 분위기와 떠오른 생각이나 이미지다.','S','N']];
+const R={
+INTJ:{plant:'올리브나무',img:'olive_tree.png',title:'조용한 전략가',catch:'서두르지 않아도 괜찮아. 나는 내가 갈 방향을 알고 있으니까.',traits:['통찰','계획','단단함'],good:'ENFP',bad:'ESFP',desc:[`올리브나무는 천천히 자라지만 시간이 흐를수록 단단한 모습을 갖춰가는 식물이에요. 당신도 올리브나무처럼 <strong>자신만의 기준과 방향을 가지고 움직이는 사람</strong>이에요. 당장의 결과보다 앞으로 어떻게 될지를 생각하며 계획하는 편이에요.`,`혼자 생각하고 판단할 시간을 중요하게 여기고, 충분히 고민한 뒤 움직여요. 복잡한 문제에서도 핵심을 찾아 <strong>자신만의 방식으로 정리하는 힘</strong>이 있어요.`,`머릿속에서 이미 여러 단계를 생각한 뒤 말하다 보니 주변이 따라가기 어려울 때도 있어요. 결론뿐 아니라 과정도 조금 나눈다면 <strong>단단함에 여유까지 더해질 거예요.</strong>`]},
+INTP:{plant:'유칼립투스',img:'eucalyptus.png',title:'호기심 많은 탐구자',catch:'남들이 그냥 지나치는 것도 나는 한 번 더 궁금해.',traits:['호기심','논리','아이디어'],good:'ENTJ',bad:'ESFJ',desc:[`유칼립투스처럼 조용해 보여도 머릿속에는 생각이 끊임없이 자라나요. 익숙한 것에도 <strong>“왜?”라는 질문을 던지고 원리를 이해하려는 사람</strong>이에요.`,`관심이 생긴 분야라면 시간 가는 줄 모르고 깊게 파고들어요. 남들이 정해둔 방식보다 <strong>더 효율적이고 흥미로운 방법</strong>을 찾아내는 데 재미를 느껴요.`,`좋은 아이디어가 많지만 머릿속에만 머물 때도 있어요. 완벽한 답을 기다리기보다 작은 것부터 시작하면 <strong>생각이 훨씬 멋진 결과로 이어질 수 있어요.</strong>`]},
+ENTJ:{plant:'몬스테라',img:'monstera.png',title:'대담한 통솔자',catch:'넓게 뻗어나가는 잎처럼, 내가 갈 길은 내가 만들어.',traits:['멋진 매력','성장','변화'],good:'INTP',bad:'ISFJ',desc:[`몬스테라는 커다란 잎을 힘차게 펼치며 공간을 채워가는 식물이에요. 당신도 몬스테라처럼 <strong>목표가 생기면 주저하기보다 직접 방향을 정하고 앞으로 나아가는 사람</strong>이에요. 상황을 빠르게 파악하고 계획을 세우는 데 능해서 자연스럽게 사람들을 이끄는 역할을 맡기도 해요.`,`새로운 도전도 쉽게 두려워하지 않아요. 더 좋은 방법이 보인다면 익숙한 방식에 머무르기보다 과감하게 변화를 선택하고, 어려운 일이 생겨도 <strong>“그래서 어떻게 해결하지?”</strong>를 먼저 생각하는 편이에요.`,`빠른 판단과 강한 추진력이 누군가에게는 조금 단호하게 느껴질 수도 있어요. <strong>앞으로 나아가는 힘에 다른 사람을 기다려주는 여유까지 더해진다면</strong>, 더욱 든든한 사람이 될 거예요.`]},
+ENTP:{plant:'아이비',img:'ivy.png',title:'자유로운 발명가',catch:'정해진 길이 재미없다면, 다른 방향으로 자라면 되지!',traits:['재치','변화','가능성'],good:'INFJ',bad:'ISTJ',desc:[`아이비가 벽과 길을 따라 자유롭게 뻗어가듯 당신은 <strong>새로운 가능성과 다른 길을 발견하는 데 능한 사람</strong>이에요. 당연하게 여겨지는 것에도 질문을 던져요.`,`상황이 바뀌면 빠르게 다른 방법을 떠올리고, 예상하지 못한 아이디어를 연결하는 힘이 있어요. <strong>틀에 갇히지 않는 유연함</strong>이 큰 매력이에요.`,`새로운 아이디어가 계속 떠오르다 보니 마무리 전에 다음 재미로 넘어갈 때도 있어요. 한두 가지를 끝까지 이어가는 힘을 더하면 <strong>가능성을 실제 결과로 만드는 사람</strong>이 될 수 있어요.`]},
+INFJ:{plant:'라벤더',img:'lavender.png',title:'조용한 조언자',catch:'조용히 머물러도, 나의 향기는 오래 남아.',traits:['통찰','공감','깊이'],good:'ENTP',bad:'ESTP',desc:[`라벤더의 은은한 향기처럼 당신은 크게 드러내지 않아도 <strong>주변에 오래 남는 따뜻함과 깊이</strong>가 있어요. 사람의 감정과 분위기를 세심하게 읽어요.`,`많은 관계보다 마음이 통하는 깊은 관계를 선호해요. 누군가의 이야기를 진심으로 듣고 <strong>그 사람 안의 가능성을 발견하는 힘</strong>이 있어요.`,`다른 사람의 마음을 먼저 살피다 자신의 감정을 뒤로 미룰 때도 있어요. 당신 자신에게도 같은 친절을 건넨다면 <strong>향기처럼 오래가는 단단함</strong>이 생길 거예요.`]},
+INFP:{plant:'수국',img:'hydrangea.png',title:'감성적인 이상가',catch:'내 마음에는 생각보다 많은 색이 있어.',traits:['감성','상상','진심'],good:'ENFJ',bad:'ESTJ',desc:[`수국이 여러 색을 품듯 당신의 마음에도 <strong>다양한 감정과 풍부한 상상</strong>이 있어요. 겉으로 조용해 보여도 내면에서는 많은 이야기가 펼쳐져요.`,`무엇을 하든 나에게 어떤 의미가 있는지를 중요하게 생각해요. 좋아하는 사람과 가치에는 깊은 애정을 주고 <strong>작은 아름다움도 잘 발견하는 사람</strong>이에요.`,`작은 말 한마디를 오래 마음에 담아둘 만큼 섬세하기도 해요. 모두에게 이해받으려 애쓰기보다 <strong>나의 색을 알아주는 사람과 나답게 피어나도 충분해요.</strong>`]},
+ENFJ:{plant:'제라늄',img:'geranium.png',title:'따뜻한 성장 리더',catch:'함께 있을 때 더 따뜻하게 피어나는 사람이야.',traits:['배려','응원','연결'],good:'INFP',bad:'ISTP',desc:[`제라늄처럼 당신은 사람들 사이에 <strong>따뜻한 온기를 더하는 사람</strong>이에요. 누가 소외되어 있는지 자연스럽게 알아차리고 먼저 손을 내밀어요.`,`다른 사람의 장점을 발견하고 응원하는 데 능해요. 혼자 잘되는 것보다 <strong>함께 성장하는 과정</strong>에서 큰 보람을 느껴요.`,`모두를 챙기려다 내 몫보다 많은 책임을 떠안을 때도 있어요. 가끔은 나를 위한 여백을 남겨두는 것이 <strong>더 오래 따뜻하게 피어나는 방법</strong>이에요.`]},
+ENFP:{plant:'해바라기',img:'sunflower.png',title:'반짝이는 탐험가',catch:'재밌어 보이는 게 있다면, 일단 햇빛 따라 출발!',traits:['에너지','호기심','가능성'],good:'INTJ',bad:'ISTJ',desc:[`해바라기처럼 당신은 <strong>호기심과 밝은 에너지로 새로운 곳을 바라보는 사람</strong>이에요. 새로운 사람과 경험에서 금세 재미를 찾아요.`,`관심사가 다양하고 하나의 길만 고집하기보다 나만의 길을 만들어가요. 평범한 상황에서도 <strong>새로운 가능성을 발견하는 눈</strong>이 있어요.`,`처음의 뜨거운 열정이 다른 재미를 만나면 금세 이동할 때도 있어요. 정말 중요한 한두 가지에 집중해 끝까지 이어가면 <strong>당신의 빛이 더 멀리 닿을 거예요.</strong>`]},
+ISTJ:{plant:'스투키',img:'sansevieria.png',title:'꾸준한 원칙주의자',catch:'눈에 띄지 않아도 괜찮아. 나는 꾸준히 내 자리를 지켜.',traits:['책임','꾸준함','신뢰'],good:'ISFJ',bad:'ENFP',desc:[`스투키처럼 당신은 화려하게 드러내기보다 <strong>맡은 자리를 꾸준히 지키는 믿음직한 사람</strong>이에요. 해야 할 일은 책임감 있게 마무리해요.`,`미리 준비하고 계획을 세우면 마음이 편해져요. 작은 부분도 놓치지 않는 꼼꼼함 덕분에 <strong>주변에서 믿고 맡길 수 있는 사람</strong>으로 보일 때가 많아요.`,`계획이 갑자기 바뀌면 스트레스를 받을 수 있어요. 가끔은 예상 밖의 변화에도 작은 여지를 남겨두면 <strong>단단함에 유연함까지 더해질 거예요.</strong>`]},
+ISFJ:{plant:'동백꽃',img:'camellia.png',title:'다정한 수호자',catch:'말하지 않아도 괜찮아. 나는 오래 곁에 있어줄게.',traits:['배려','신뢰','세심함'],good:'ISTJ',bad:'ENTJ',desc:[`동백꽃처럼 당신은 <strong>소중한 사람 곁을 조용히 오래 지켜주는 사람</strong>이에요. 말보다 행동으로 마음을 보여주는 경우가 많아요.`,`사람들의 취향이나 작은 이야기를 잘 기억하고 필요한 순간에 챙겨줘요. 천천히 관계를 쌓지만 한번 마음을 주면 <strong>쉽게 변하지 않는 신뢰</strong>가 있어요.`,`상대에게 맞추다 자신의 마음을 참을 때도 있어요. 나의 필요와 감정도 소중히 표현하면 <strong>더 건강하고 오래가는 관계</strong>를 만들 수 있어요.`]},
+ESTJ:{plant:'선인장',img:'cactus.png',title:'현실적인 실행가',catch:'환경 탓은 나중에. 일단 할 수 있는 것부터 해보자.',traits:['실행','현실감','결단'],good:'ESFJ',bad:'INFP',desc:[`선인장처럼 당신은 환경이 쉽지 않아도 <strong>지금 할 수 있는 일을 찾아 움직이는 현실적인 사람</strong>이에요. 문제를 보면 해결책부터 생각해요.`,`목표와 역할이 분명할수록 능력을 발휘하고 일을 실제 결과로 만드는 힘이 있어요. <strong>빠른 판단과 실행력</strong>이 큰 장점이에요.`,`해결에 집중하다 보면 상대의 감정을 지나칠 때도 있어요. 답을 주기 전에 마음을 한번 들어준다면 <strong>강한 추진력에 따뜻함까지 더해질 거예요.</strong>`]},
+ESFJ:{plant:'벚꽃',img:'cherry_blossom.png',title:'사랑받는 분위기 메이커',catch:'좋은 순간은 함께할 때 더 예쁘잖아.',traits:['친화력','배려','표현'],good:'ESTJ',bad:'INTP',desc:[`벚꽃처럼 당신은 <strong>사람들과 함께할 때 더욱 밝게 피어나는 사람</strong>이에요. 주변 분위기를 빠르게 읽고 자연스럽게 어울려요.`,`기념일이나 작은 약속을 잘 기억하고 마음을 표현하는 데 익숙해요. 함께하는 사람에게 <strong>소속감과 따뜻함을 만들어주는 힘</strong>이 있어요.`,`주변 반응에 마음이 흔들릴 때도 있어요. 모든 사람을 만족시킬 필요는 없다는 걸 기억하면 <strong>당신다운 밝음이 더 편안하게 빛날 거예요.</strong>`]},
+ISTP:{plant:'행운목',img:'lucky_tree.png',title:'침착한 해결사',catch:'복잡하게 생각하기보다, 직접 해보면 답이 나오잖아.',traits:['독립','침착','해결'],good:'ISFP',bad:'ENFJ',desc:[`행운목은 곧게 뻗은 줄기와 시원한 잎이 매력적인 식물이에요. 당신도 행운목처럼 <strong>자기만의 방식이 분명하고, 필요할 때는 망설이지 않고 움직이는 사람</strong>이에요. 말로 길게 설명하기보다 직접 해보고 경험하면서 답을 찾는 편이에요.`,`예상하지 못한 문제가 생겨도 비교적 침착하게 상황을 바라봐요. 정해진 방법만 고집하기보다 지금 가장 현실적인 해결책을 찾는 데 능하고, <strong>위기일수록 오히려 빛나는 현실적인 문제 해결 능력</strong>이 강점이에요.`,`혼자서도 잘 해내는 만큼 마음이나 생각을 표현하는 데에는 조금 무심할 수 있어요. <strong>가끔은 마음을 행동뿐 아니라 말로도 보여준다면 당신의 진심이 훨씬 잘 전달될 거예요.</strong>`]},
+ISFP:{plant:'프리지아',img:'freesia.png',title:'감각적인 자유인',catch:'좋아하는 건, 그냥 내 방식대로 좋아하고 싶어.',traits:['감각','자유','다정함'],good:'ISTP',bad:'ESFJ',desc:[`프리지아처럼 당신은 <strong>자신만의 취향과 감각이 분명한 사람</strong>이에요. 억지로 드러내지 않아도 좋아하는 것에서 자연스럽게 개성이 보여요.`,`관계에서도 부담스럽게 가까워지기보다 자연스러운 흐름을 좋아해요. 말보다 행동으로 마음을 보여주고 <strong>일상의 작은 아름다움을 발견하는 능력</strong>이 있어요.`,`갈등을 피하려고 괜찮다고 말하며 마음을 숨길 때도 있어요. 나의 감정과 경계를 조금 더 솔직하게 표현하면 <strong>자유로움도 관계도 함께 지킬 수 있어요.</strong>`]},
+ESTP:{plant:'장미',img:'rose.png',title:'대담한 모험가',catch:'망설이고 있을 시간에, 일단 해보는 거야.',traits:['대담함','순발력','매력'],good:'ESFP',bad:'INFJ',desc:[`장미처럼 당신은 존재감이 분명하고 <strong>지금 이 순간을 힘껏 살아가는 사람</strong>이에요. 고민만 하기보다 직접 부딪혀보며 답을 찾아요.`,`상황을 빠르게 읽고 예상 밖의 변화에도 능숙하게 대응해요. 사람들과 어울릴 때 자연스러운 자신감과 <strong>즉각적인 행동력</strong>이 돋보여요.`,`솔직하고 빠른 표현이 누군가에게는 조금 강하게 느껴질 수 있어요. 상대의 속도를 한번 살피면 <strong>대담한 매력이 더 오래 좋은 인상으로 남을 거예요.</strong>`]},
+ESFP:{plant:'튤립',img:'tulip.png',title:'즐거운 에너지 메이커',catch:'오늘의 즐거움은 오늘 제대로 누려야 하잖아!',traits:['즐거움','표현','활력'],good:'ESTP',bad:'INTJ',desc:[`튤립처럼 당신은 <strong>주변을 밝게 만드는 생생한 에너지</strong>가 있어요. 좋은 경험을 혼자 간직하기보다 사람들과 함께 나누는 걸 좋아해요.`,`사람과 쉽게 가까워지고 평범한 하루에서도 재미를 찾아내요. 지금 이 순간을 즐기는 능력 덕분에 <strong>주변까지 기분 좋게 만드는 사람</strong>이에요.`,`눈앞의 즐거움에 집중하다 미래 준비를 미룰 때도 있어요. 작은 계획 하나만 더해도 <strong>오늘의 행복과 내일의 안정감을 함께 챙길 수 있어요.</strong>`]}}
+const matchCopy={INTJ:'새로운 가능성과 활력을 가져오는 해바라기와, 방향과 중심을 잡아주는 올리브나무는 서로의 빈틈을 자연스럽게 채워줘요.',INTP:'유칼립투스의 독특한 아이디어를 몬스테라가 실행으로 연결해주는 조합이에요. 서로의 능력을 존중하면 멋진 결과가 생겨요.',ENTJ:'유칼립투스는 새로운 관점과 아이디어를 더하고, 몬스테라는 그것을 실제 행동으로 옮겨요. 생각과 실행이 잘 맞는 든든한 조합이에요.',ENTP:'빠르게 뻗는 아이비의 아이디어에 라벤더의 깊이와 의미가 더해져요. 서로 다른 시선이 대화를 더 풍성하게 만들어요.',INFJ:'아이비의 자유로운 아이디어가 라벤더의 깊은 통찰과 만나 새로운 가능성을 만들어요. 서로에게 신선한 자극이 되는 친구예요.',INFP:'수국의 섬세한 마음을 제라늄이 따뜻하게 알아봐줘요. 서로의 가능성을 응원하며 편안하게 성장할 수 있어요.',ENFJ:'제라늄의 응원과 수국의 진심이 잘 통하는 조합이에요. 서로의 마음을 존중하며 함께 성장하기 좋아요.',ENFP:'해바라기의 새로운 에너지와 올리브나무의 단단한 방향감이 서로를 보완해줘요. 함께하면 아이디어가 현실적인 길을 찾아요.',ISTJ:'스투키와 동백꽃은 모두 신뢰와 꾸준함을 중요하게 생각해요. 말이 많지 않아도 오래 편안하게 곁을 지킬 수 있어요.',ISFJ:'동백꽃의 세심함과 스투키의 책임감이 만나 안정적인 관계를 만들어요. 서로 믿고 의지하기 좋은 친구예요.',ESTJ:'선인장의 실행력과 벚꽃의 관계 감각이 잘 어울려요. 목표도 챙기고 사람도 챙기는 균형 좋은 조합이에요.',ESFJ:'벚꽃의 따뜻한 분위기와 선인장의 든든한 실행력이 만나 서로를 안정적으로 받쳐줘요.',ISTP:'행운목과 프리지아는 서로의 독립성과 자유를 존중해요. 부담 없이 각자의 시간을 지키면서도 필요할 때 자연스럽게 곁에 있어줘요.',ISFP:'프리지아와 행운목은 말이 많지 않아도 서로의 자유를 존중하는 편안한 관계예요. 함께 있을 때 부담이 적어요.',ESTP:'장미와 튤립은 둘 다 지금의 경험을 즐길 줄 알아요. 함께하면 행동이 빠르고 즐거운 추억이 많이 생겨요.',ESFP:'튤립과 장미는 에너지와 행동 속도가 잘 맞아요. 서로의 즐거움을 키워주는 활기찬 친구가 될 수 있어요.'};
+const badCopy={INTJ:'튤립은 현재의 즐거움과 즉흥적인 경험을 중요하게 생각해요. 장기적인 계획을 선호하는 올리브나무와는 속도가 다를 수 있어요.',INTP:'벚꽃은 관계 속의 표현과 교류를 중요하게 생각해요. 혼자 생각할 시간이 필요한 유칼립투스와는 에너지 사용 방식이 달라요.',ENTJ:'동백꽃은 충분히 살피고 관계를 고려한 뒤 움직이는 편이에요. 빠르게 결정하는 몬스테라와는 서로의 속도를 이해할 시간이 필요해요.',ENTP:'스투키는 검증된 방법과 안정적인 흐름을 좋아해요. 계속 새로운 변화를 시도하는 아이비와는 방식이 다를 수 있어요.',INFJ:'장미는 먼저 행동하며 경험 속에서 답을 찾는 편이에요. 충분히 생각하고 의미를 살피는 라벤더와는 속도가 다를 수 있어요.',INFP:'선인장은 현실적인 해결책과 빠른 결정을 중시해요. 감정과 의미를 충분히 살피는 수국과는 대화 방식이 다를 수 있어요.',ENFJ:'행운목은 독립적으로 움직이고 감정을 행동으로 표현하는 편이에요. 관계와 표현을 중요하게 여기는 제라늄과는 필요한 연결의 양이 달라요.',ENFP:'스투키는 안정적인 계획을 좋아하는 반면 해바라기는 자유롭게 움직이는 걸 좋아해요. 서로의 방식을 존중하는 연습이 필요해요.',ISTJ:'해바라기의 즉흥성과 빠른 변화는 스투키에게 조금 정신없게 느껴질 수 있어요. 계획과 자유 사이의 조율이 필요해요.',ISFJ:'몬스테라의 빠른 결정과 강한 추진력이 동백꽃에게는 조금 급하게 느껴질 수 있어요. 서로의 속도를 확인하는 것이 중요해요.',ESTJ:'수국은 감정과 가치의 의미를 충분히 살피는 편이에요. 해결책부터 찾는 선인장과는 대화의 출발점이 다를 수 있어요.',ESFJ:'유칼립투스는 혼자 생각하고 충전하는 시간이 중요해요. 자주 표현하고 연결되길 원하는 벚꽃과는 관계의 리듬이 다를 수 있어요.',ISTP:'제라늄은 마음을 자주 표현하고 관계의 연결을 확인하는 편이에요. 독립적인 행운목에게는 그 정도가 부담스럽게 느껴질 수 있어요.',ISFP:'벚꽃은 활발한 교류와 표현을 좋아해요. 자연스러운 거리감을 원하는 프리지아와는 원하는 친밀감의 방식이 다를 수 있어요.',ESTP:'라벤더는 충분히 생각하고 의미를 살핀 뒤 움직여요. 행동부터 시작하는 장미와는 의사결정 속도가 다를 수 있어요.',ESFP:'올리브나무는 먼 미래까지 생각하며 계획하는 편이에요. 오늘의 즐거움을 중시하는 튤립과는 우선순위가 다를 수 있어요.'};
+let idx=0, scores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0},history=[];
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');scrollTo(0,0)}
+function startQuiz(){idx=0;scores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};history=[];show('quiz');renderQ()}
+function renderQ(){let q=Q[idx];qnum.textContent=idx+1;prog.style.width=((idx+1)/20*100)+'%';qtitle.textContent=q[0];answers.innerHTML=`<button class="answer" onclick="choose(0)"><span class="letter">A</span><span class="atext">${q[1]}</span></button><button class="answer" onclick="choose(1)"><span class="letter">B</span><span class="atext">${q[2]}</span></button>`}
+function choose(n){let q=Q[idx],key=q[n+3];scores[key]++;history.push(key);idx++;if(idx<20)renderQ();else analyze()}
+function prevQ(){if(idx===0){goStart();return}idx--;let k=history.pop();scores[k]--;renderQ()}
+function analyze(){
+  show('loading');
+  const scene=document.getElementById('runScene');
+  const girl=document.getElementById('runnerGirl');
+  const dog=document.getElementById('runnerDog');
+  const meet=document.getElementById('runnerMeeting');
+  const bar=document.querySelector('.loadbar i');
+
+  scene.classList.remove('meeting');
+  girl.getAnimations().forEach(a=>a.cancel());
+  dog.getAnimations().forEach(a=>a.cancel());
+  girl.style.opacity='1';
+  dog.style.opacity='1';
+  meet.style.opacity='0';
+  girl.style.left='12px';
+  dog.style.right='12px';
+  pct.textContent='0%';
+  loadnote.textContent='당신과 닮은 식물을 찾고 있어요...';
+
+  const moveDuration=3200;
+  const meetingHold=2000;
+  const totalDuration=moveDuration+meetingHold;
+
+  bar.style.animation='none';
+  void bar.offsetWidth;
+  bar.style.animation=`load ${totalDuration}ms linear forwards`;
+
+  girl.animate([
+    {left:'12px',transform:'translateY(-50%)'},
+    {left:'13%',transform:'translateY(-62%)'},
+    {left:'24%',transform:'translateY(-42%)'},
+    {left:'31%',transform:'translateY(-58%)'},
+    {left:'36%',transform:'translateY(-50%)'}
+  ],{duration:moveDuration,easing:'linear',fill:'forwards'});
+
+  dog.animate([
+    {right:'12px',transform:'translateY(-50%)'},
+    {right:'13%',transform:'translateY(-40%)'},
+    {right:'24%',transform:'translateY(-61%)'},
+    {right:'31%',transform:'translateY(-43%)'},
+    {right:'36%',transform:'translateY(-50%)'}
+  ],{duration:moveDuration,easing:'linear',fill:'forwards'});
+
+  const started=performance.now();
+  let met=false;
+  function tick(now){
+    const elapsed=now-started;
+    pct.textContent=Math.min(100,Math.round(elapsed/totalDuration*100))+'%';
+    if(elapsed>1450 && !met) loadnote.textContent='당신의 성향을 살펴보는 중이에요...';
+    if(elapsed>=moveDuration && !met){
+      met=true;
+      scene.classList.add('meeting');
+      loadnote.textContent='당신과 닮은 식물을 찾았어요!';
+    }
+    if(elapsed<totalDuration){requestAnimationFrame(tick)}
+    else{renderResult()}
+  }
+  requestAnimationFrame(tick);
+}
+function mbti(){return (scores.E>scores.I?'E':'I')+(scores.S>scores.N?'S':'N')+(scores.T>scores.F?'T':'F')+(scores.J>scores.P?'J':'P')}
+function renderResult(){
+  let m=mbti(),r=R[m],g=R[r.good],b=R[r.bad];
+  resultContent.innerHTML=`
+    <div class="result-head">
+      <img class="result-heart-decor" src="assets/decorations/heart_01.png" alt="">
+      <img class="result-sparkle-decor" src="assets/decorations/sparkle_01.png" alt="">
+      <img class="result-leaf-decor" src="assets/decorations/leaf_01.png" alt="">
+      <div class="result-bubble">당신과 닮은 식물은?</div>
+      <div class="plant-name">${r.plant}</div>
+      <div class="mbti-pill">${m} · ${r.title}</div>
+      <img class="result-img" src="assets/characters/${r.img}">
+      <div class="traits">${r.traits.map(x=>`<span>${x}</span>`).join('')}</div>
+      <div class="quote">“${r.catch}”</div>
+    </div>
+    <div class="result-step-card">
+      <div class="section-title">${r.plant}는 이런 식물이에요!</div>
+      ${r.desc.map(x=>`<p>${x}</p>`).join('')}
+    </div>
+    <div class="result-step-card good-card">
+      <div class="section-title">잘 맞는 식물 친구</div>
+      <div class="match good"><img src="assets/characters/${g.img}"><div><h3>${g.plant} · ${r.good}</h3><p>${matchCopy[m]}</p></div></div>
+    </div>
+    <div class="result-step-card bad-card">
+      <div class="section-title">조금 어려운 식물 친구</div>
+      <div class="match bad"><img src="assets/characters/${b.img}"><div><h3>${b.plant} · ${r.bad}</h3><p>${badCopy[m]}</p></div></div>
+    </div>
+    <div class="result-step-card">
+      <div class="section-title">결과 공유하기</div>
+      <div class="actions"><button class="share" onclick="shareResult('${m}','${r.plant}')">친구들에게 공유하기</button><button class="restart" onclick="startQuiz()">다시 테스트하기</button></div>
+    </div>
+    <div class="result-step-card">
+      <div class="section-title">다른 결과도 궁금하다면?</div>
+      <div class="alltypes">${Object.entries(R).map(([k,v])=>`<div class="type"><img src="assets/characters/${v.img}">${v.plant}<br>${k}</div>`).join('')}</div>
+    </div>`;
+  show('result');
+}
+async function shareResult(m,p){let text=`나의 식물 MBTI는 ${p} (${m})! 🌱`;if(navigator.share){try{await navigator.share({title:'식물 MBTI 테스트',text});return}catch(e){}}try{await navigator.clipboard.writeText(text);alert('결과 문구를 복사했어요!')}catch(e){alert(text)}}
+function goStart(){show('start')}
+</script></body></html>
