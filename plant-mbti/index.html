@@ -448,7 +448,7 @@ const matchCopy={INTJ:'새로운 가능성과 활력을 가져오는 해바라�
 const badCopy={INTJ:'튤립은 현재의 즐거움과 즉흥적인 경험을 중요하게 생각해요. 장기적인 계획을 선호하는 올리브나무와는 속도가 다를 수 있어요.',INTP:'벚꽃은 관계 속의 표현과 교류를 중요하게 생각해요. 혼자 생각할 시간이 필요한 유칼립투스와는 에너지 사용 방식이 달라요.',ENTJ:'동백꽃은 충분히 살피고 관계를 고려한 뒤 움직이는 편이에요. 빠르게 결정하는 몬스테라와는 서로의 속도를 이해할 시간이 필요해요.',ENTP:'스투키는 검증된 방법과 안정적인 흐름을 좋아해요. 계속 새로운 변화를 시도하는 아이비와는 방식이 다를 수 있어요.',INFJ:'장미는 먼저 행동하며 경험 속에서 답을 찾는 편이에요. 충분히 생각하고 의미를 살피는 라벤더와는 속도가 다를 수 있어요.',INFP:'선인장은 현실적인 해결책과 빠른 결정을 중시해요. 감정과 의미를 충분히 살피는 수국과는 대화 방식이 다를 수 있어요.',ENFJ:'행운목은 독립적으로 움직이고 감정을 행동으로 표현하는 편이에요. 관계와 표현을 중요하게 여기는 제라늄과는 필요한 연결의 양이 달라요.',ENFP:'스투키는 안정적인 계획을 좋아하는 반면 해바라기는 자유롭게 움직이는 걸 좋아해요. 서로의 방식을 존중하는 연습이 필요해요.',ISTJ:'해바라기의 즉흥성과 빠른 변화는 스투키에게 조금 정신없게 느껴질 수 있어요. 계획과 자유 사이의 조율이 필요해요.',ISFJ:'몬스테라의 빠른 결정과 강한 추진력이 동백꽃에게는 조금 급하게 느껴질 수 있어요. 서로의 속도를 확인하는 것이 중요해요.',ESTJ:'수국은 감정과 가치의 의미를 충분히 살피는 편이에요. 해결책부터 찾는 선인장과는 대화의 출발점이 다를 수 있어요.',ESFJ:'유칼립투스는 혼자 생각하고 충전하는 시간이 중요해요. 자주 표현하고 연결되길 원하는 벚꽃과는 관계의 리듬이 다를 수 있어요.',ISTP:'제라늄은 마음을 자주 표현하고 관계의 연결을 확인하는 편이에요. 독립적인 행운목에게는 그 정도가 부담스럽게 느껴질 수 있어요.',ISFP:'벚꽃은 활발한 교류와 표현을 좋아해요. 자연스러운 거리감을 원하는 프리지아와는 원하는 친밀감의 방식이 다를 수 있어요.',ESTP:'라벤더는 충분히 생각하고 의미를 살핀 뒤 움직여요. 행동부터 시작하는 장미와는 의사결정 속도가 다를 수 있어요.',ESFP:'올리브나무는 먼 미래까지 생각하며 계획하는 편이에요. 오늘의 즐거움을 중시하는 튤립과는 우선순위가 다를 수 있어요.'};
 let idx=0, scores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0},history=[];
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');scrollTo(0,0)}
-function startQuiz(){idx=0;scores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};history=[];show('quiz');renderQ()}
+function startQuiz(){clearSharedResult();idx=0;scores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};history=[];show('quiz');renderQ()}
 function renderQ(){let q=Q[idx];qnum.textContent=idx+1;prog.style.width=((idx+1)/20*100)+'%';qtitle.textContent=q[0];answers.innerHTML=`<button class="answer" onclick="choose(0)"><span class="letter">A</span><span class="atext">${q[1]}</span></button><button class="answer" onclick="choose(1)"><span class="letter">B</span><span class="atext">${q[2]}</span></button>`}
 function choose(n){let q=Q[idx],key=q[n+3];scores[key]++;history.push(key);idx++;if(idx<20)renderQ();else analyze()}
 function prevQ(){if(idx===0){goStart();return}idx--;let k=history.pop();scores[k]--;renderQ()}
@@ -512,8 +512,8 @@ function analyze(){
   requestAnimationFrame(tick);
 }
 function mbti(){return (scores.E>scores.I?'E':'I')+(scores.S>scores.N?'S':'N')+(scores.T>scores.F?'T':'F')+(scores.J>scores.P?'J':'P')}
-function renderResult(){
-  let m=mbti(),r=R[m],g=R[r.good],b=R[r.bad];
+function renderResult(sharedType){
+  let m=sharedType && R[sharedType] ? sharedType : mbti(),r=R[m],g=R[r.good],b=R[r.bad];
   resultContent.innerHTML=`
     <div class="result-head">
       <img class="result-heart-decor" src="assets/decorations/heart_01.png" alt="">
@@ -548,6 +548,34 @@ function renderResult(){
     </div>`;
   show('result');
 }
-async function shareResult(m,p){let text=`나의 식물 MBTI는 ${p} (${m})! 🌱`;if(navigator.share){try{await navigator.share({title:'식물 MBTI 테스트',text});return}catch(e){}}try{await navigator.clipboard.writeText(text);alert('결과 문구를 복사했어요!')}catch(e){alert(text)}}
-function goStart(){show('start')}
+function clearSharedResult(){
+  const url=new URL(location.href);
+  if(!url.searchParams.has('result'))return;
+  url.searchParams.delete('result');
+  window.history.replaceState(null,'',url);
+}
+async function shareResult(m,p){
+  const url=new URL(location.href);
+  url.searchParams.set('result',m);
+  url.hash='';
+  const link=url.toString();
+  const message=`나와 닮은 식물은 ${p}! 🌱 내 결과 보기`;
+  if(navigator.share){
+    try{
+      await navigator.share({title:'식물 MBTI 테스트',text:message,url:link});
+      return;
+    }catch(e){
+      if(e.name==='AbortError')return;
+    }
+  }
+  try{
+    await navigator.clipboard.writeText(link);
+    alert('결과 링크를 복사했어요! 카카오톡 채팅에 붙여넣어 주세요.');
+  }catch(e){
+    prompt('이 결과 링크를 복사해 카카오톡으로 보내주세요.',link);
+  }
+}
+function goStart(){clearSharedResult();show('start')}
+const sharedType=new URL(location.href).searchParams.get('result');
+if(sharedType && Object.prototype.hasOwnProperty.call(R,sharedType))renderResult(sharedType);
 </script></body></html>
