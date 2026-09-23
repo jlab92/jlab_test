@@ -555,7 +555,7 @@ function clearSharedResult(){
   window.history.replaceState(null,'',url);
 }
 async function shareResult(m,p){
-  const link=new URL(`result-${m}.html`, location.href).toString();
+  const link=new URL(`result-${m}.html?v=2`, location.href).toString();
   const message=`나와 닮은 식물은 ${p}! 🌱 내 결과 보기`;
   if(navigator.share){
     try{
